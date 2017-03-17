@@ -59,10 +59,15 @@ DirectoryIndex app.php
 
 <IfModule !mod_rewrite.c>
     <IfModule mod_alias.c>
+    Header set Access-Control-Allow-Origin "*"
         # When mod_rewrite is not available, we instruct a temporary redirect of
         # the start page to the front controller explicitly so that the website
         # and the generated links can still be used.
         RedirectMatch 302 ^/$ /app.php/
         # RedirectTemp cannot be used instead
     </IfModule>
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
 </IfModule>

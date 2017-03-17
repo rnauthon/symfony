@@ -39,7 +39,13 @@ class DefaultController extends Controller
         $serializer = new Serializer($normalizers, $encoders);
 
         $json = $serializer->serialize($todos, 'json');
+        $response = new Response($json);
 
-        return new Response($json);
+//        $response->set('Access-Control-Allow-Headers', 'origin, content-type, accept');
+//        $response->set('Access-Control-Allow-Origin', '*');
+//        $response->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, PATCH, OPTIONS');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+
+        return $response;
     }
 }
