@@ -41,11 +41,24 @@ class DefaultController extends Controller
         $json = $serializer->serialize($todos, 'json');
         $response = new Response($json);
 
-//        $response->set('Access-Control-Allow-Headers', 'origin, content-type, accept');
-//        $response->set('Access-Control-Allow-Origin', '*');
-//        $response->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, PATCH, OPTIONS');
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-
         return $response;
+    }
+
+    /**
+     * @Route("/posttodos", name="homepage")
+     */
+    public function posttodosAction(Request $request)
+    {
+        $todoRepository = $this->getDoctrine()->getRepository('AppBundle:Todo');
+        $todos = $todoRepository->findAll();
+
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $json = $serializer->serialize($todos, 'json');
+        $response = new Response($json);
+
+
     }
 }
